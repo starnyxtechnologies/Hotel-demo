@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Stay | Premium Hotel & Lodging</title>
+    <!-- Tailwind CSS for rapid UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Luxury Theme Variables */
+        :root {
+            --bg-dark: #0a0a0a;
+            --gold: #D4AF37;
+            --gold-light: #F3E5AB;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Custom Thali Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background-color: var(--bg-dark);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .thali {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--gold);
+            position: relative;
+            background: radial-gradient(circle, #2a2a2a, #000000);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            animation: spin 3s linear infinite;
+        }
+
+        .katori {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #e0e0e0, #999999);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 2px 5px rgba(0,0,0,0.5);
+            border: 1px solid #fff;
+        }
+        
+        .katori-1 { top: 15px; left: 55px; }
+        .katori-2 { bottom: 15px; left: 55px; }
+        .katori-3 { left: 15px; top: 55px; }
+        .katori-4 { right: 15px; top: 55px; }
+
+        .rice {
+            width: 50px;
+            height: 50px;
+            background: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            box-shadow: inset 0 0 15px #ddd;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Glassmorphism Classes */
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            transition: all 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Gold Button */
+        .gold-btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .gold-btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Footer StarnyX Hover */
+        .starnyx-link {
+            color: var(--gold);
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .starnyx-link:hover {
+            text-shadow: 0px 0px 12px rgba(212,175,55,0.8);
+            color: var(--gold-light);
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Custom Thali Loader -->
+    <div id="loader">
+        <div class="thali mb-6">
+            <div class="rice"></div>
+            <div class="katori katori-1"></div>
+            <div class="katori katori-2"></div>
+            <div class="katori katori-3"></div>
+            <div class="katori katori-4"></div>
+        </div>
+        <h2 class="brand-font text-2xl text-[#D4AF37] tracking-widest animate-pulse">Preparing Your Experience...</h2>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav fixed w-full z-50 top-0 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex-shrink-0 flex items-center">
+                    <h1 class="brand-font text-3xl text-[#D4AF37]">LUXE<span class="text-white">STAY</span></h1>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-[#D4AF37] hover:text-white transition px-3 py-2 text-sm uppercase tracking-wider">Home</a>
+                    <a href="suites.html" class="text-gray-300 hover:text-[#D4AF37] transition px-3 py-2 text-sm uppercase tracking-wider">Our Suites</a>
+                    <a href="amenities.html" class="text-gray-300 hover:text-[#D4AF37] transition px-3 py-2 text-sm uppercase tracking-wider">Amenities</a>
+                    <a href="gallery.html" class="text-gray-300 hover:text-[#D4AF37] transition px-3 py-2 text-sm uppercase tracking-wider">Gallery</a>
+                    <a href="contact.html" class="gold-btn px-6 py-2 text-sm rounded-none">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Cinematic Background (Replace src with your actual hotel image) -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1542314831-c6a4d2748622?q=80&w=2000&auto=format&fit=crop" alt="Luxury Hotel" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0a0a]"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-4 mt-20 reveal">
+            <p class="text-[#D4AF37] uppercase tracking-[0.3em] mb-4 text-sm md:text-base">Welcome to the epitome of</p>
+            <h1 class="brand-font text-5xl md:text-7xl lg:text-8xl mb-6 font-bold">Pure Luxury</h1>
+            <p class="max-w-2xl mx-auto text-gray-300 mb-10 font-light leading-relaxed">Escape the ordinary. Immerse yourself in an unforgettable experience where world-class hospitality meets breathtaking elegance.</p>
+            <a href="#suites" class="gold-btn px-10 py-4 text-lg">Explore Suites</a>
+        </div>
+    </section>
+
+    <!-- Quick Intro Section -->
+    <section class="py-24 px-4 bg-[#0a0a0a]">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <h2 class="brand-font text-4xl md:text-5xl text-[#D4AF37] mb-6">A Heritage of Elegance</h2>
+                <p class="text-gray-400 leading-relaxed mb-6 font-light">
+                    Every corner of LuxeStay is crafted to perfection. From our signature Thali dining experience to our panoramic suite views, we promise a stay that lingers in your memories forever.
+                </p>
+                <div class="flex items-center gap-4 text-[#D4AF37]">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="relative reveal delay-200">
+                <div class="absolute inset-0 border-2 border-[#D4AF37] transform translate-x-4 translate-y-4 z-0"></div>
+                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=1000&auto=format&fit=crop" alt="Hotel Interior" class="relative z-10 w-full h-[400px] object-cover shadow-2xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights (Top Suites) -->
+    <section id="suites" class="py-24 px-4 bg-[#0d0d0d] border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="brand-font text-4xl text-[#D4AF37] mb-4">Our Premium Suites</h2>
+                <p class="text-gray-400 uppercase tracking-widest text-sm">Tailored for Royalty</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Suite 1 -->
+                <div class="glass-card rounded-xl overflow-hidden reveal">
+                    <div class="h-64 overflow-hidden relative group">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=800&auto=format&fit=crop" alt="Royal Suite" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition duration-500"></div>
+                    </div>
+                    <div class="p-8 text-center">
+                        <h3 class="brand-font text-2xl mb-2">The Royal Suite</h3>
+                        <p class="text-gray-400 text-sm mb-6 font-light">Panoramic views, private jacuzzi, and exclusive butler service.</p>
+                        <a href="https://wa.me/918087585398?text=I%20want%20to%20book%20The%20Royal%20Suite" target="_blank" class="gold-btn px-6 py-2 text-sm w-full block">Book via WhatsApp</a>
+                    </div>
+                </div>
+
+                <!-- Suite 2 -->
+                <div class="glass-card rounded-xl overflow-hidden reveal delay-100">
+                    <div class="h-64 overflow-hidden relative group">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=800&auto=format&fit=crop" alt="Executive Room" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition duration-500"></div>
+                    </div>
+                    <div class="p-8 text-center">
+                        <h3 class="brand-font text-2xl mb-2">Executive Haven</h3>
+                        <p class="text-gray-400 text-sm mb-6 font-light">Perfect for business travelers needing luxury and high-speed connectivity.</p>
+                        <a href="https://wa.me/918087585398?text=I%20want%20to%20book%20Executive%20Haven" target="_blank" class="gold-btn px-6 py-2 text-sm w-full block">Book via WhatsApp</a>
+                    </div>
+                </div>
+
+                <!-- Suite 3 -->
+                <div class="glass-card rounded-xl overflow-hidden reveal delay-200">
+                    <div class="h-64 overflow-hidden relative group">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c894e4dc243e?q=80&w=800&auto=format&fit=crop" alt="Honeymoon Suite" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition duration-500"></div>
+                    </div>
+                    <div class="p-8 text-center">
+                        <h3 class="brand-font text-2xl mb-2">Honeymoon Villa</h3>
+                        <p class="text-gray-400 text-sm mb-6 font-light">Romantic ambiance, private pool, and complimentary wine on arrival.</p>
+                        <a href="https://wa.me/918087585398?text=I%20want%20to%20book%20Honeymoon%20Villa" target="_blank" class="gold-btn px-6 py-2 text-sm w-full block">Book via WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/918087585398" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer with StarnyX Branding -->
+    <footer style="background-color: #050505; border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 60px 20px 30px; text-align: center;">
+        <div class="max-w-4xl mx-auto mb-10">
+            <h2 class="brand-font text-3xl text-[#D4AF37] mb-6">LUXESTAY</h2>
+            <p class="text-gray-400 font-light text-sm mb-6">123 Luxury Avenue, Elegance District, City 400001<br>contact@luxestay.com | +91 8087585398</p>
+            <div class="flex justify-center space-x-6 text-[#D4AF37]">
+                <a href="#" class="hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-facebook text-xl"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-twitter text-xl"></i></a>
+            </div>
+        </div>
+
+        <!-- The Masterpiece Branding -->
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); font-family: 'Montserrat', sans-serif; font-size: 13px; color: #666; letter-spacing: 1px;">
+            Designed & Engineered with <span style="color: #D4AF37;">♥</span> by <br class="md:hidden">
+            <a href="https://starnyxtechnologies.com" target="_blank" class="starnyx-link mt-2 md:mt-0 inline-block md:ml-1">
+                StarnyX Technologies
+            </a>
+        </div>
+    </footer>
+
+    <!-- Scripts for Animations -->
+    <script>
+        // Custom Thali Loader Logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    // Trigger initial reveals after loader goes away
+                    reveal();
+                }, 800);
+            }, 3000); // 3 seconds loading as requested
+        });
+
+        // Intersection Observer for Scroll Reveals
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // Navbar Background on Scroll
+        window.addEventListener("scroll", () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+                nav.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.7)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
