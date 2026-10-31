@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delicious Stays & Dining | Premium Hotel</title>
+    <title>Flavours & Stay | Premium Luxury Hotel</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Dancing Script for Food vibes, Poppins for clean UI -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary-red: #8a0c0c;
-            --dark-red: #3a0000;
+            --dark-red: #2a0000;
             --spicy-orange: #ff6b00;
             --gold: #ffc107;
             --text-light: #ffffff;
@@ -26,28 +26,61 @@
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            cursor: none; /* Custom cursor sathi default hide kela */
         }
 
-        .font-cursive {
-            font-family: 'Dancing Script', cursive;
+        .font-cursive { font-family: 'Dancing Script', cursive; }
+
+        /* ---------------- CUSTOM CURSOR ---------------- */
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 0 0 10px var(--gold);
+        }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 2px solid var(--spicy-orange);
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        @media (max-width: 768px) {
+            .cursor-dot, .cursor-outline { display: none; }
+            body { cursor: auto; }
+        }
+
+        /* ---------------- SCROLL PROGRESS BAR ---------------- */
+        #scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            width: 0%; height: 4px;
+            background: linear-gradient(90deg, var(--spicy-orange), var(--gold));
+            z-index: 10001;
+            box-shadow: 0 0 10px var(--gold);
         }
 
         /* ---------------- LOADER ---------------- */
         #loader {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle, var(--primary-red), var(--dark-red));
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+            position: fixed; inset: 0;
+            background: radial-gradient(circle, #5c0808, var(--dark-red));
+            z-index: 9998;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: opacity 0.8s ease;
         }
 
         .thali {
-            width: 150px;
-            height: 150px;
+            width: 150px; height: 150px;
             border-radius: 50%;
             border: 4px solid var(--gold);
             position: relative;
@@ -57,120 +90,112 @@
         }
 
         .katori {
-            width: 35px;
-            height: 35px;
+            width: 35px; height: 35px;
             background: linear-gradient(135deg, #e0e0e0, #999999);
-            border-radius: 50%;
-            position: absolute;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 2px 5px rgba(0,0,0,0.5);
+            border-radius: 50%; position: absolute;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
             border: 1px solid #fff;
         }
-        
-        .katori-1 { top: 15px; left: 55px; }
-        .katori-2 { bottom: 15px; left: 55px; }
-        .katori-3 { left: 15px; top: 55px; }
-        .katori-4 { right: 15px; top: 55px; }
-
+        .katori-1 { top: 15px; left: 55px; } .katori-2 { bottom: 15px; left: 55px; }
+        .katori-3 { left: 15px; top: 55px; } .katori-4 { right: 15px; top: 55px; }
         .rice {
-            width: 50px;
-            height: 50px;
-            background: #ffffff;
-            border-radius: 50%;
-            position: absolute;
-            top: 50px;
-            left: 50px;
+            width: 50px; height: 50px;
+            background: #ffffff; border-radius: 50%;
+            position: absolute; top: 50px; left: 50px;
             box-shadow: inset 0 0 15px #ddd;
         }
-
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* ---------------- UI EFFECTS ---------------- */
-        .radial-glow {
-            background: radial-gradient(circle, rgba(255,107,0,0.4) 0%, rgba(58,0,0,0) 70%);
-        }
-
         .glass-nav {
-            background: rgba(58, 0, 0, 0.85);
+            background: rgba(42, 0, 0, 0.85);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 193, 7, 0.2);
             transition: all 0.4s ease;
         }
-
-        .text-glow {
-            text-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
+        .text-glow { text-shadow: 0 0 20px rgba(255, 193, 7, 0.8); }
+
         .food-card {
-            background: linear-gradient(145deg, #5c0808, #2a0000);
+            background: linear-gradient(145deg, #5c0808, #1a0000);
             border-radius: 20px;
             border: 1px solid rgba(255, 107, 0, 0.3);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
         .food-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-10px);
             border-color: var(--gold);
             box-shadow: 0 20px 40px rgba(255, 107, 0, 0.4);
         }
 
-        .food-img-wrapper img {
-            transition: transform 0.8s ease;
-        }
-        
-        .food-card:hover .food-img-wrapper img {
-            transform: scale(1.1) rotate(2deg);
-        }
-
         /* ---------------- FLOATING INGREDIENTS ---------------- */
-        .float-item {
-            position: absolute;
-            pointer-events: none;
-            z-index: 10;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
-        }
-
+        .float-item { position: absolute; pointer-events: none; z-index: 10; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)); }
         .float-1 { animation: float-up-down 4s ease-in-out infinite; }
         .float-2 { animation: float-up-down 5s ease-in-out infinite reverse; }
         .float-3 { animation: float-rotate 6s linear infinite; }
 
-        @keyframes float-up-down {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
-        }
-
-        @keyframes float-rotate {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
+        @keyframes float-up-down { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(10deg); } }
+        @keyframes float-rotate { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(180deg); } 100% { transform: translateY(0) rotate(360deg); } }
 
         /* ---------------- BUTTONS ---------------- */
         .btn-spicy {
             background: linear-gradient(45deg, var(--spicy-orange), #d32f2f);
-            color: white;
-            border-radius: 50px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: white; border-radius: 50px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
             box-shadow: 0 8px 20px rgba(255, 107, 0, 0.4);
             transition: all 0.3s ease;
         }
-
         .btn-spicy:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 12px 25px rgba(255, 107, 0, 0.6);
-            background: linear-gradient(45deg, #d32f2f, var(--spicy-orange));
         }
 
-        /* Reveal Animations */
-        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+        /* ---------------- MODAL ---------------- */
+        #dish-modal {
+            opacity: 0; pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #dish-modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            transform: scale(0.9) translateY(50px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #dish-modal.active .modal-content { transform: scale(1) translateY(0); }
+
+        /* ---------------- MARQUEE (REVIEWS) ---------------- */
+        .marquee-wrapper { overflow: hidden; display: flex; }
+        .marquee-content {
+            display: flex; gap: 2rem;
+            animation: scroll-left 25s linear infinite;
+        }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Reveal */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        /* Input styles */
+        input[type="date"], select {
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,193,7,0.3);
+            color: white; color-scheme: dark;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Scroll Progress & Cursor -->
+    <div id="scroll-progress"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
     <!-- Loading Screen (Thali) -->
     <div id="loader">
@@ -181,184 +206,288 @@
             <div class="katori katori-3"></div>
             <div class="katori katori-4"></div>
         </div>
-        <h2 class="font-cursive text-5xl text-white text-glow animate-pulse">Serving Deliciousness...</h2>
+        <h2 class="font-cursive text-5xl text-[var(--gold)] text-glow animate-pulse">Spicing things up...</h2>
     </div>
 
     <!-- Navigation -->
     <nav class="glass-nav fixed w-full z-50 top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-2 cursor-pointer">
-                    <i class="fas fa-utensils text-[var(--gold)] text-2xl"></i>
+                <div class="flex items-center gap-2 cursor-pointer hover-target">
+                    <i class="fas fa-fire text-[var(--spicy-orange)] text-2xl"></i>
                     <h1 class="font-cursive text-3xl font-bold text-white tracking-wider">Flavours<span class="text-[var(--gold)]">&</span>Stay</h1>
                 </div>
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#menu" class="text-white hover:text-[var(--gold)] font-semibold transition">Food Menu</a>
-                    <a href="#rooms" class="text-white hover:text-[var(--gold)] font-semibold transition">Luxury Rooms</a>
-                    <a href="#about" class="text-white hover:text-[var(--gold)] font-semibold transition">Our Story</a>
-                    <a href="https://wa.me/918087585398" class="btn-spicy px-6 py-2">Book Table / Room</a>
+                    <a href="#menu" class="text-white hover:text-[var(--gold)] transition hover-target">Menu</a>
+                    <a href="#rooms" class="text-white hover:text-[var(--gold)] transition hover-target">Rooms</a>
+                    <a href="#reviews" class="text-white hover:text-[var(--gold)] transition hover-target">Reviews</a>
+                    <a href="#booking" class="btn-spicy px-6 py-2 hover-target">Book Now</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Mouth-Watering Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <!-- Background Radial Glow -->
-        <div class="absolute inset-0 radial-glow z-0"></div>
-        
-        <!-- Hero Background Image (Spicy Food/Steak vibe) -->
-        <div class="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
-            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=2000&auto=format&fit=crop" alt="Delicious Food Background" class="w-full h-full object-cover">
+    <!-- Parallax Hero Section -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center pt-20 overflow-hidden">
+        <!-- Hero Background -->
+        <div class="absolute inset-0 z-0 bg-[var(--dark-red)]">
+            <img id="parallax-bg" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=2000&auto=format&fit=crop" alt="Delicious Food" class="w-full h-[120%] object-cover opacity-40 mix-blend-overlay transform -translate-y-10">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#2a0000]/80 to-[#2a0000]"></div>
         </div>
 
-        <!-- Floating Ingredients (Just like your reference image) -->
-        <img src="https://png.pngtree.com/png-clipart/20221001/ourmid/pngtree-red-chili-flying-png-image_6244304.png" class="float-item float-1 w-24 top-1/4 left-10 opacity-80" alt="Chili">
-        <img src="https://png.pngtree.com/png-vector/20230906/ourmid/pngtree-basil-leaves-isolated-png-image_10011504.png" class="float-item float-2 w-16 bottom-1/4 right-20 opacity-70" alt="Leaf">
-        <img src="https://png.pngtree.com/png-clipart/20230413/original/pngtree-red-onion-slice-png-image_9049449.png" class="float-item float-3 w-16 top-1/3 right-32 opacity-60" alt="Onion">
+        <!-- Floating Ingredients -->
+        <img src="https://png.pngtree.com/png-clipart/20221001/ourmid/pngtree-red-chili-flying-png-image_6244304.png" class="float-item float-1 w-24 top-1/4 left-[10%] opacity-90" alt="Chili">
+        <img src="https://png.pngtree.com/png-vector/20230906/ourmid/pngtree-basil-leaves-isolated-png-image_10011504.png" class="float-item float-2 w-16 bottom-[30%] right-[15%] opacity-80" alt="Leaf">
 
         <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-10 reveal">
             <h2 class="font-cursive text-7xl md:text-9xl text-white text-glow mb-2 transform -rotate-2">Delicious</h2>
-            <h1 class="text-4xl md:text-6xl font-bold uppercase tracking-[0.2em] text-[var(--gold)] mb-6">Food Menu & Lodging</h1>
-            <p class="text-gray-300 mb-10 text-lg md:text-xl max-w-2xl mx-auto">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Experience mouth-watering cuisines and 5-star comfort under one roof.
+            <h1 class="text-4xl md:text-6xl font-bold uppercase tracking-[0.2em] text-[var(--gold)] mb-6">Experience Luxury</h1>
+            <p class="text-gray-300 mb-12 text-lg md:text-xl max-w-2xl mx-auto">
+                Spicy, authentic, and unforgettable. Savour world-class cuisine and retreat to 5-star comfort.
             </p>
-            <div class="flex justify-center gap-6">
-                <a href="#menu" class="btn-spicy px-10 py-4 text-lg">Explore Menu</a>
-                <a href="#rooms" class="px-10 py-4 text-lg font-bold text-white border-2 border-[var(--gold)] rounded-full hover:bg-[var(--gold)] hover:text-[var(--dark-red)] transition duration-300">View Rooms</a>
-            </div>
         </div>
 
-        <!-- Sale Badge (Like in reference) -->
-        <div class="absolute right-10 top-1/3 bg-white text-[var(--primary-red)] rounded-full w-28 h-28 flex flex-col justify-center items-center transform rotate-12 shadow-[0_0_20px_rgba(255,255,255,0.5)] z-20 animate-bounce float-2">
-            <span class="text-sm font-bold uppercase">Save</span>
-            <span class="text-4xl font-black">50%</span>
+        <!-- Advanced Booking Engine UI (SaaS Vibe in Luxury Theme) -->
+        <div id="booking" class="relative z-20 w-full max-w-4xl px-4 mt-8 reveal" style="transition-delay: 0.3s;">
+            <div class="glass-panel rounded-2xl p-6 flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div class="flex-1 w-full">
+                    <label class="block text-xs text-[var(--gold)] uppercase mb-1">Check In</label>
+                    <input type="date" class="w-full p-3 rounded-lg focus:outline-none focus:border-[var(--spicy-orange)] transition hover-target">
+                </div>
+                <div class="flex-1 w-full">
+                    <label class="block text-xs text-[var(--gold)] uppercase mb-1">Check Out</label>
+                    <input type="date" class="w-full p-3 rounded-lg focus:outline-none focus:border-[var(--spicy-orange)] transition hover-target">
+                </div>
+                <div class="flex-1 w-full">
+                    <label class="block text-xs text-[var(--gold)] uppercase mb-1">Guests</label>
+                    <select class="w-full p-3 rounded-lg focus:outline-none focus:border-[var(--spicy-orange)] transition hover-target">
+                        <option>2 Adults, 1 Room</option>
+                        <option>3 Adults, 1 Room</option>
+                        <option>Family (2 Rooms)</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-auto mt-4 md:mt-5">
+                    <button class="btn-spicy w-full px-8 py-3 h-[50px] hover-target" onclick="window.location.href='https://wa.me/918087585398'">Check Availability</button>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Signature Dishes (Food Menu) -->
-    <section id="menu" class="py-24 px-4 bg-[var(--dark-red)] relative border-t border-[var(--primary-red)]">
+    <!-- Interactive Menu Section -->
+    <section id="menu" class="py-24 px-4 bg-[var(--dark-red)] relative">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 reveal">
                 <h3 class="font-cursive text-5xl text-[var(--gold)] mb-2">Chef's Special</h3>
-                <h2 class="text-4xl font-bold uppercase tracking-wider text-white">Signature Thalis & Dishes</h2>
+                <h2 class="text-4xl font-bold uppercase tracking-wider text-white">Signature Dishes</h2>
             </div>
 
             <div class="grid md:grid-cols-3 gap-10">
-                <!-- Dish 1 -->
-                <div class="food-card reveal">
+                <!-- Dish Card -->
+                <div class="food-card reveal hover-target group" onclick="openModal('Maharaja Thali', 'Authentic Indian Spices, Rich Gravy, Butter Naan, and Unlimited Love.', '₹499', 2)">
                     <div class="absolute top-4 right-4 bg-[var(--spicy-orange)] text-white font-bold px-4 py-1 rounded-full z-10">₹499</div>
-                    <div class="food-img-wrapper h-60 w-full overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1544025162-8311a2f64601?q=80&w=800&auto=format&fit=crop" alt="Premium Thali" class="w-full h-full object-cover">
+                    <div class="h-60 w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544025162-8311a2f64601?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
                     </div>
                     <div class="p-6">
                         <h3 class="text-2xl font-bold text-[var(--gold)] mb-2">Maharaja Thali</h3>
-                        <p class="text-gray-300 text-sm mb-6">Authentic spices, rich gravies, roasted papad, and unlimited love served on a silver platter.</p>
-                        <a href="#" class="text-white border-b border-[var(--spicy-orange)] hover:text-[var(--spicy-orange)] transition pb-1 font-semibold uppercase tracking-wide">Order Now <i class="fas fa-arrow-right ml-2"></i></a>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Authentic Indian spices with rich gravy and roasted papad...</p>
+                        <button class="text-white border-b border-[var(--spicy-orange)] group-hover:text-[var(--spicy-orange)] transition pb-1 font-semibold uppercase tracking-wide">View Details <i class="fas fa-eye ml-2"></i></button>
                     </div>
                 </div>
 
-                <!-- Dish 2 (Like reference steak) -->
-                <div class="food-card reveal" style="transition-delay: 0.2s;">
+                <!-- Dish Card (Steak) -->
+                <div class="food-card reveal hover-target group" onclick="openModal('Roasted Special Steak', 'Premium marinated meat roasted to perfection with secret herbs and spicy potatoes.', '₹899', 4)" style="transition-delay: 0.2s;">
                     <div class="absolute top-4 right-4 bg-[var(--spicy-orange)] text-white font-bold px-4 py-1 rounded-full z-10">₹899</div>
-                    <div class="food-img-wrapper h-60 w-full overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1544025162-8311a2f64601?q=80&w=800&auto=format&fit=crop" alt="Roasted Steak" class="w-full h-full object-cover" style="content: url('https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=800&auto=format&fit=crop');">
+                    <div class="h-60 w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
                     </div>
                     <div class="p-6">
                         <h3 class="text-2xl font-bold text-[var(--gold)] mb-2">Roasted Special Steak</h3>
-                        <p class="text-gray-300 text-sm mb-6">Juicy, tender, well-marinated meat roasted to perfection with spicy herbs and potatoes.</p>
-                        <a href="#" class="text-white border-b border-[var(--spicy-orange)] hover:text-[var(--spicy-orange)] transition pb-1 font-semibold uppercase tracking-wide">Order Now <i class="fas fa-arrow-right ml-2"></i></a>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Juicy, tender, well-marinated meat roasted to perfection...</p>
+                        <button class="text-white border-b border-[var(--spicy-orange)] group-hover:text-[var(--spicy-orange)] transition pb-1 font-semibold uppercase tracking-wide">View Details <i class="fas fa-eye ml-2"></i></button>
                     </div>
                 </div>
 
-                <!-- Dish 3 -->
-                <div class="food-card reveal" style="transition-delay: 0.4s;">
+                <!-- Dish Card -->
+                <div class="food-card reveal hover-target group" onclick="openModal('Fiery Arrabiata', 'Italian classic with a desi spicy twist. Loaded with red chilies and exotic veggies.', '₹349', 5)" style="transition-delay: 0.4s;">
                     <div class="absolute top-4 right-4 bg-[var(--spicy-orange)] text-white font-bold px-4 py-1 rounded-full z-10">₹349</div>
-                    <div class="food-img-wrapper h-60 w-full overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=800&auto=format&fit=crop" alt="Spicy Pasta" class="w-full h-full object-cover">
+                    <div class="h-60 w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold text-[var(--gold)] mb-2">Red Sauce Arrabiata</h3>
-                        <p class="text-gray-300 text-sm mb-6">A fiery Italian classic with a desi twist. Generously loaded with chili flakes and exotic veggies.</p>
-                        <a href="#" class="text-white border-b border-[var(--spicy-orange)] hover:text-[var(--spicy-orange)] transition pb-1 font-semibold uppercase tracking-wide">Order Now <i class="fas fa-arrow-right ml-2"></i></a>
+                        <h3 class="text-2xl font-bold text-[var(--gold)] mb-2">Fiery Arrabiata</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">A fiery Italian classic with a desi twist. Generously loaded...</p>
+                        <button class="text-white border-b border-[var(--spicy-orange)] group-hover:text-[var(--spicy-orange)] transition pb-1 font-semibold uppercase tracking-wide">View Details <i class="fas fa-eye ml-2"></i></button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Lodging / Rooms Section -->
-    <section id="rooms" class="py-24 px-4 bg-[#1a0000]">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
-            <div class="md:w-1/2 reveal">
-                <div class="relative rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(255,193,7,0.2)] border-2 border-[var(--gold)]">
-                    <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=1000&auto=format&fit=crop" alt="Luxury Room" class="w-full object-cover h-[500px] hover:scale-105 transition duration-700">
-                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black to-transparent h-32"></div>
+    <!-- Dynamic Social Proof / Reviews Marquee -->
+    <section id="reviews" class="py-16 bg-[#150000] border-y border-[var(--primary-red)] overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 mb-8 text-center reveal">
+            <h2 class="text-2xl text-[var(--gold)] font-bold uppercase tracking-widest"><i class="fab fa-google mr-2"></i> What Our Guests Say</h2>
+        </div>
+        <div class="marquee-wrapper relative">
+            <!-- Left/Right Gradient fade -->
+            <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#150000] to-transparent z-10"></div>
+            <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#150000] to-transparent z-10"></div>
+            
+            <div class="marquee-content hover-target">
+                <!-- Double content for seamless loop -->
+                <div class="flex gap-6 px-4">
+                    <div class="glass-panel p-6 w-80 rounded-xl flex-shrink-0">
+                        <div class="text-[var(--spicy-orange)] mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="text-gray-300 text-sm italic mb-4">"The Steak was incredibly juicy and the room was absolute luxury. A perfect weekend!"</p>
+                        <p class="text-[var(--gold)] font-bold">- Rahul D.</p>
+                    </div>
+                    <div class="glass-panel p-6 w-80 rounded-xl flex-shrink-0">
+                        <div class="text-[var(--spicy-orange)] mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="text-gray-300 text-sm italic mb-4">"Best Thali I've ever had. The glassmorphism booking engine on their site was so easy to use!"</p>
+                        <p class="text-[var(--gold)] font-bold">- Sneha K.</p>
+                    </div>
+                    <div class="glass-panel p-6 w-80 rounded-xl flex-shrink-0">
+                        <div class="text-[var(--spicy-orange)] mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <p class="text-gray-300 text-sm italic mb-4">"Amazing hospitality. The ambiance is exactly as they promise. Pure luxury."</p>
+                        <p class="text-[var(--gold)] font-bold">- Amit P.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="md:w-1/2 reveal" style="transition-delay: 0.3s;">
-                <h3 class="font-cursive text-5xl text-[var(--gold)] mb-2">Rest in Luxury</h3>
-                <h2 class="text-4xl font-bold uppercase tracking-wide text-white mb-6">Premium Lodging</h2>
-                <p class="text-gray-300 text-lg leading-relaxed mb-8">
-                    After a heavy, satisfying meal, retreat to our 5-star luxury suites. Designed with warm tones, plush bedding, and 24/7 room service so the deliciousness never stops.
-                </p>
-                <ul class="space-y-4 mb-10 text-gray-200">
-                    <li class="flex items-center gap-4"><i class="fas fa-bed text-[var(--spicy-orange)] text-xl"></i> King Size Comfort</li>
-                    <li class="flex items-center gap-4"><i class="fas fa-wifi text-[var(--spicy-orange)] text-xl"></i> High-Speed Connectivity</li>
-                    <li class="flex items-center gap-4"><i class="fas fa-coffee text-[var(--spicy-orange)] text-xl"></i> Complimentary Breakfast</li>
-                </ul>
-                <a href="https://wa.me/918087585398" class="btn-spicy px-10 py-4 text-lg inline-block">Book Your Stay</a>
+                <!-- Duplicate for Loop -->
+                <div class="flex gap-6 px-4">
+                    <div class="glass-panel p-6 w-80 rounded-xl flex-shrink-0">
+                        <div class="text-[var(--spicy-orange)] mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="text-gray-300 text-sm italic mb-4">"The Steak was incredibly juicy and the room was absolute luxury. A perfect weekend!"</p>
+                        <p class="text-[var(--gold)] font-bold">- Rahul D.</p>
+                    </div>
+                    <div class="glass-panel p-6 w-80 rounded-xl flex-shrink-0">
+                        <div class="text-[var(--spicy-orange)] mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="text-gray-300 text-sm italic mb-4">"Best Thali I've ever had. The glassmorphism booking engine on their site was so easy to use!"</p>
+                        <p class="text-[var(--gold)] font-bold">- Sneha K.</p>
+                    </div>
+                    <div class="glass-panel p-6 w-80 rounded-xl flex-shrink-0">
+                        <div class="text-[var(--spicy-orange)] mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <p class="text-gray-300 text-sm italic mb-4">"Amazing hospitality. The ambiance is exactly as they promise. Pure luxury."</p>
+                        <p class="text-[var(--gold)] font-bold">- Amit P.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Engineered Footer (StarnyX Magic) -->
-    <footer class="bg-black pt-16 pb-8 border-t-4 border-[var(--primary-red)]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-3 gap-10 text-center md:text-left mb-12">
-                <div>
-                    <h1 class="font-cursive text-4xl font-bold text-white tracking-wider mb-4">Flavours<span class="text-[var(--gold)]">&</span>Stay</h1>
-                    <p class="text-gray-400 text-sm">Where every bite is a celebration and every night is a dream.</p>
-                </div>
-                <div class="flex flex-col items-center md:items-start gap-3 text-gray-300">
-                    <p><i class="fas fa-globe text-[var(--spicy-orange)] mr-2"></i> www.yourwebsite.com</p>
-                    <p><i class="fas fa-phone-alt text-[var(--spicy-orange)] mr-2"></i> UAN 111-222-444</p>
-                    <p><i class="fab fa-facebook text-[var(--spicy-orange)] mr-2"></i> www.facebook.com/yourpage</p>
-                </div>
-                <div class="flex justify-center md:justify-end items-center gap-4">
-                    <div class="w-12 h-12 rounded-full border border-[var(--gold)] flex justify-center items-center text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black transition cursor-pointer"><i class="fab fa-instagram text-xl"></i></div>
-                    <div class="w-12 h-12 rounded-full border border-[var(--gold)] flex justify-center items-center text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black transition cursor-pointer"><i class="fab fa-twitter text-xl"></i></div>
-                </div>
+    <!-- Glassmorphism Modal for Dish Details -->
+    <div id="dish-modal" class="fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center">
+        <div class="modal-content glass-panel w-[90%] max-w-lg rounded-2xl overflow-hidden relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white hover-target z-10"><i class="fas fa-times text-2xl"></i></button>
+            <div class="h-40 bg-[url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center relative">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#2a0000] to-transparent"></div>
             </div>
+            <div class="p-8 pt-0 -mt-10 relative z-10">
+                <div class="bg-[var(--spicy-orange)] text-white font-bold px-4 py-1 rounded-full inline-block mb-4 shadow-lg" id="modal-price">₹0</div>
+                <h2 id="modal-title" class="text-3xl font-bold text-[var(--gold)] mb-2">Dish Name</h2>
+                <div class="flex items-center gap-2 mb-4" id="modal-spicy-level">
+                    <span class="text-xs text-gray-400 uppercase tracking-wider">Spice Level: </span>
+                    <!-- Peppers injected via JS -->
+                </div>
+                <p id="modal-desc" class="text-gray-300 mb-8 leading-relaxed">Description goes here.</p>
+                <a href="https://wa.me/918087585398" class="btn-spicy w-full py-3 block text-center hover-target">Order via WhatsApp</a>
+            </div>
+        </div>
+    </div>
 
-            <!-- StarnyX Signature Branding -->
+    <!-- Footer with StarnyX Branding -->
+    <footer class="bg-black pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h1 class="font-cursive text-4xl font-bold text-white tracking-wider mb-8">Flavours<span class="text-[var(--gold)]">&</span>Stay</h1>
+            
+            <!-- StarnyX Signature Branding (As Requested) -->
             <div class="border-t border-white/10 pt-6 flex flex-col items-center justify-center text-center">
                 <p class="text-gray-500 text-sm tracking-wide">
                     Designed & Engineered with <span class="text-[var(--primary-red)] animate-pulse inline-block mx-1 text-lg">♥</span> by
                 </p>
-                <a href="https://starnyxtechnologies.com" target="_blank" class="group mt-1 flex items-center gap-2">
-                    <span class="font-bold text-lg text-white group-hover:text-[var(--gold)] transition duration-300 font-sans tracking-widest">StarnyX Technologies</span>
+                <a href="https://starnyxtechnologies.com" target="_blank" class="group mt-1 flex items-center gap-2 hover-target">
+                    <span class="font-bold text-xl text-white group-hover:text-[var(--gold)] transition duration-300 font-sans tracking-widest">StarnyX Technologies</span>
                     <i class="fas fa-fire text-[var(--spicy-orange)] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
                 </a>
             </div>
         </div>
     </footer>
 
-    <!-- Animation Script -->
+    <!-- Scripts for All Features -->
     <script>
-        // Loader logic
+        // 1. Loader Logic
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
-                    triggerReveals();
+                    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
                 }, 800);
-            }, 3000); 
+            }, 2500); 
         });
 
-        // Scroll Reveals
+        // 2. Custom Cursor Logic
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            dot.style.left = `${posX}px`;
+            dot.style.top = `${posY}px`;
+            
+            // Subtle lag for outline
+            outline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 150, fill: "forwards" });
+        });
+
+        // Magnetic effect on interactive elements
+        document.querySelectorAll('.hover-target').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                outline.style.width = '60px';
+                outline.style.height = '60px';
+                outline.style.backgroundColor = 'rgba(255, 107, 0, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                outline.style.width = '40px';
+                outline.style.height = '40px';
+                outline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // 3. Scroll Progress Bar & Parallax Background
+        const progressBar = document.getElementById('scroll-progress');
+        const parallaxBg = document.getElementById('parallax-bg');
+
+        window.addEventListener('scroll', () => {
+            // Progress Bar
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+
+            // Parallax
+            let scrollY = window.scrollY;
+            if (parallaxBg) {
+                parallaxBg.style.transform = `translateY(${scrollY * 0.4 - 40}px)`;
+            }
+
+            // Navbar Blur
+            const nav = document.querySelector('nav');
+            if (scrollY > 50) {
+                nav.style.background = 'rgba(20, 0, 0, 0.95)';
+                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.8)';
+            } else {
+                nav.style.background = 'rgba(42, 0, 0, 0.85)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // 4. Scroll Reveal Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -367,20 +496,32 @@
             });
         }, { threshold: 0.1 });
 
-        function triggerReveals() {
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        // 5. Glassmorphism Modal Logic
+        const modal = document.getElementById('dish-modal');
+        function openModal(title, desc, price, spicyLevel) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-price').innerText = price;
+            
+            let peppers = '';
+            for(let i=0; i<spicyLevel; i++) {
+                peppers += '<i class="fas fa-pepper-hot text-[var(--primary-red)]"></i>';
+            }
+            for(let i=spicyLevel; i<5; i++) {
+                peppers += '<i class="fas fa-pepper-hot text-gray-700"></i>';
+            }
+            document.getElementById('modal-spicy-level').innerHTML = `<span class="text-xs text-gray-400 uppercase tracking-wider">Spice Level: </span> ${peppers}`;
+            
+            modal.classList.add('active');
         }
 
-        // Nav Scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.background = 'rgba(20, 0, 0, 0.95)';
-                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.8)';
-            } else {
-                nav.style.background = 'rgba(58, 0, 0, 0.85)';
-                nav.style.boxShadow = 'none';
-            }
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        // Close modal on outside click
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
         });
     </script>
 </body>
