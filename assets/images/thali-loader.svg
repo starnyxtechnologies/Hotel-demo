@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260" role="img" aria-labelledby="title desc">
+  <title id="title">Animated Indian thali</title><desc id="desc">A cheerful illustrated Indian thali with bowls of curry, rice, roti and vegetables.</desc>
+  <style>
+  .plate-spin{transform-origin:180px 124px;animation:plateFloat 3.8s ease-in-out infinite}
+  .steam path{animation:steamRise 2.5s ease-in-out infinite;transform-origin:center}
+  .steam path:nth-child(2){animation-delay:.45s}.steam path:nth-child(3){animation-delay:.9s}
+  @keyframes plateFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
+  @keyframes steamRise{0%{opacity:0;transform:translateY(9px)}35%{opacity:.8}100%{opacity:0;transform:translateY(-12px)}}
+</style>
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff7df"/><stop offset=".52" stop-color="#d8c19b"/><stop offset="1" stop-color="#9c7448"/></linearGradient>
+    <linearGradient id="food" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffbd39"/><stop offset="1" stop-color="#c83e16"/></linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9ac45c"/><stop offset="1" stop-color="#286d38"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur stdDeviation="7"/></filter>
+  </defs>
+  <ellipse cx="180" cy="218" rx="134" ry="19" fill="#2e130d" opacity=".18" filter="url(#shadow)"/>
+  <g class="plate-spin">
+    <ellipse cx="180" cy="132" rx="158" ry="88" fill="#8c5a34" opacity=".2"/>
+    <ellipse cx="180" cy="124" rx="156" ry="87" fill="url(#plate)" stroke="#8e603b" stroke-width="5"/>
+    <ellipse cx="180" cy="122" rx="143" ry="74" fill="#fff9ea" stroke="#f4dfb9" stroke-width="4"/>
+    <path d="M49 122c29-48 83-65 131-65s103 17 131 65c-28 47-81 65-131 65S77 169 49 122Z" fill="#e7cda2" opacity=".22"/>
+    <!-- rice -->
+    <g transform="translate(147 103)"><ellipse cx="0" cy="0" rx="39" ry="27" fill="#fff"/><g fill="#fffdf3" stroke="#e8d7ac" stroke-width="1"><path d="M-22-7q7-12 13 0m0 11q7-13 13 0m0-18q8-11 13 1m-15 26q8-12 15 0m-39-7q7-10 12 0m23-12q8-9 13 0"/></g><path d="M-7-13q8-8 15-1" stroke="#77a34b" stroke-width="3" fill="none"/></g>
+    <!-- curry bowl -->
+    <g transform="translate(76 105)"><ellipse rx="31" ry="22" fill="#a66a37"/><ellipse cy="-3" rx="27" ry="18" fill="url(#food)"/><path d="M-18-4q10-13 18 0t18 0" fill="none" stroke="#f8ce66" stroke-width="3"/><circle cx="-7" cy="-4" r="3" fill="#4c7d37"/><circle cx="10" cy="3" r="3" fill="#4c7d37"/><path d="M-4-13l8 5" stroke="#fff0b3" stroke-width="2"/></g>
+    <!-- green sabzi -->
+    <g transform="translate(254 105)"><ellipse rx="30" ry="22" fill="#a66a37"/><ellipse cy="-3" rx="26" ry="17" fill="#83a940"/><circle cx="-10" cy="-6" r="6" fill="#edb34b"/><circle cx="8" cy="1" r="7" fill="#edb34b"/><path d="M-2-14q6-9 12-2" stroke="#fff5cf" stroke-width="3" fill="none"/><path d="M-14 7q12-8 20-1" stroke="#39763c" stroke-width="3" fill="none"/></g>
+    <!-- roti -->
+    <g transform="translate(100 158)"><ellipse rx="28" ry="17" fill="#df9b46"/><path d="M-25 0q12-23 29-12t23 14q-12 18-29 13t-23-15Z" fill="#f4c77d"/><g fill="#a75d29"><circle cx="-10" cy="-4" r="2.5"/><circle cx="9" cy="5" r="2.5"/><circle cx="4" cy="-8" r="2"/></g></g>
+    <!-- salad -->
+    <g transform="translate(221 164)"><path d="M-22 10q-4-30 25-29q25 1 25 28q-23 17-50 1Z" fill="#eb7651" stroke="#a64b32" stroke-width="3"/><path d="M-9-7q6-16 17-7q8 10-3 17q-12 2-14-10Z" fill="#d8422f"/><path d="M-4-4q13-13 20-4" stroke="#fff2d1" stroke-width="3" fill="none"/><path d="M-17 7q10-8 18-2" stroke="#75a64b" stroke-width="3" fill="none"/></g>
+    <!-- lemon and papad -->
+    <path d="M174 168q17-18 32 0q-13 19-32 0Z" fill="#f6d75c"/><path d="M180 166q9-5 17 0" stroke="#fff5b5" stroke-width="2" fill="none"/>
+  </g>
+  <g class="steam" fill="none" stroke="#d88d50" stroke-linecap="round" stroke-width="5" opacity=".72"><path d="M135 51q-13-14 0-27t0-19"/><path d="M181 43q-13-14 0-27t0-19"/><path d="M224 51q-13-14 0-27t0-19"/></g>
+  <g fill="#c43b24"><path d="M22 44q12-18 24 0q-12 15-24 0Z"/><path d="M310 40q12-18 24 0q-12 15-24 0Z"/></g>
+  <g fill="#e7a52c"><path d="M34 24l4 9 9 4-9 4-4 9-4-9-9-4 9-4Z"/><path d="M322 17l4 9 9 4-9 4-4 9-4-9-9-4 9-4Z"/></g>
+</svg>
